@@ -56,7 +56,7 @@
             <th>Antal röster</th>
           </tr>
           <?php
-            $ret = pg_query($psql, "SELECT COUNT(*) AS votecount, nominee FROM votes GROUP BY nominee ORDER BY votecount;");
+            $ret = pg_query($psql, "SELECT COUNT(*) AS votecount, nominee FROM votes GROUP BY nominee ORDER BY votecount DESC;");
             if (!$ret) {
               header('Location: error.php?eCode=db_err&eStack='.pg_last_error($psql));
             }
