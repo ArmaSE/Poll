@@ -1,0 +1,516 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: #17181A;
+  color: #e5eeff;
+  min-height: 100vh;
+}
+
+.fullscreen-bg {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: -100;
+}
+
+.fullscreen-bg::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(50%, rgba(18, 16, 16, 0)), color-stop(50%, rgba(0, 0, 0, 0.25))), -webkit-gradient(linear, left top, right top, from(rgba(255, 0, 0, 0.06)), color-stop(rgba(0, 255, 0, 0.02)), to(rgba(0, 0, 255, 0.06)));
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 2;
+  background-size: 100% 2px, 3px 100%;
+  pointer-events: none;
+}
+
+.fullscreen-bg__video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-filter: brightness(40%);
+          filter: brightness(40%);
+}
+
+h1 {
+  font-family: 'ForsvarsmaktenSans Stencil';
+}
+
+p {
+  font-family: 'ForsvarsmaktenSans';
+}
+
+p.center {
+  margin: .5em auto 1em;
+  font-family: 'ForsvarsmaktenSans Stencil';
+}
+
+#content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  height: 100%;
+  min-height: 100vh;
+}
+
+#content .about {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 1 auto;
+          flex: 0 1 auto;
+}
+
+.msg h1 {
+  font-size: 2em;
+}
+
+nav.header {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  -webkit-box-flex: 0;
+      -ms-flex: 0 1 auto;
+          flex: 0 1 auto;
+}
+
+nav.header h1 {
+  font-size: 2.5em;
+  margin-top: .3em;
+  margin-bottom: .3em;
+}
+
+nav.footer {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  -webkit-box-flex: 0;
+      -ms-flex: 0 1 40px;
+          flex: 0 1 40px;
+}
+
+nav.footer p {
+  margin-top: .5em;
+  margin-bottom: .5em;
+}
+
+section {
+  min-width: 315px;
+  width: 100%;
+  max-width: 1000px;
+  margin: 2em auto;
+  background-color: rgba(0, 0, 0, 0.3);
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+section h1 {
+  margin: 1em auto 1.5em;
+}
+
+section p.text {
+  padding: 0 2.5em;
+  margin: 0 auto 3em;
+  min-width: calc(320px - 5em);
+  max-width: 900px;
+}
+
+section p.question {
+  padding: 0 1em;
+  margin: 0 auto 1em;
+  min-width: calc(320px - 5em);
+  max-width: 900px;
+}
+
+section#userinfo {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row;
+          flex-flow: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+}
+
+section#userinfo .user-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row;
+          flex-flow: row;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  -webkit-box-pack: left;
+      -ms-flex-pack: left;
+          justify-content: left;
+}
+
+section#userinfo #logout {
+  margin-top: 1em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-line-pack: center;
+      align-content: center;
+}
+
+section#userinfo .userimg {
+  margin: 1em 1em .6em 0;
+  width: 128px;
+  height: 128px;
+}
+
+section#userinfo .usercreds h1 {
+  margin: 1em auto .6em;
+}
+
+a, a:visited, a:active, a:-webkit-any-link {
+  color: #e5eeff;
+}
+
+a, a:visited, a:active, a:-moz-any-link {
+  color: #e5eeff;
+}
+
+a, a:visited, a:active, a:any-link {
+  color: #e5eeff;
+}
+
+#confirm-btn, #confirm-btn:visited, #confirm-btn:active, #confirm-btn:-webkit-any-link, #voteSend, #voteSend:visited, #voteSend:active, #voteSend:-webkit-any-link {
+  text-decoration: none;
+  font-family: 'ForsvarsmaktenSans Stencil';
+  font-size: 2em;
+  border-style: hidden;
+  padding: .8em 1.4em;
+  margin: 0.5em auto 1em;
+  background-color: #a78d46;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+#confirm-btn, #confirm-btn:visited, #confirm-btn:active, #confirm-btn:-moz-any-link, #voteSend, #voteSend:visited, #voteSend:active, #voteSend:-moz-any-link {
+  text-decoration: none;
+  font-family: 'ForsvarsmaktenSans Stencil';
+  font-size: 2em;
+  border-style: hidden;
+  padding: .8em 1.4em;
+  margin: 0.5em auto 1em;
+  background-color: #a78d46;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+#confirm-btn, #confirm-btn:visited, #confirm-btn:active, #confirm-btn:any-link, #voteSend, #voteSend:visited, #voteSend:active, #voteSend:any-link {
+  text-decoration: none;
+  font-family: 'ForsvarsmaktenSans Stencil';
+  font-size: 2em;
+  border-style: hidden;
+  padding: .8em 1.4em;
+  margin: 0.5em auto 1em;
+  background-color: #a78d46;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+#confirm-btn:hover, #confirm-btn:visited:hover, #confirm-btn:active:hover, #confirm-btn:-webkit-any-link:hover, #voteSend:hover, #voteSend:visited:hover, #voteSend:active:hover, #voteSend:-webkit-any-link:hover {
+  background-color: #8b763a;
+  color: #17181A;
+}
+
+#confirm-btn:hover, #confirm-btn:visited:hover, #confirm-btn:active:hover, #confirm-btn:-moz-any-link:hover, #voteSend:hover, #voteSend:visited:hover, #voteSend:active:hover, #voteSend:-moz-any-link:hover {
+  background-color: #8b763a;
+  color: #17181A;
+}
+
+#confirm-btn:hover, #confirm-btn:visited:hover, #confirm-btn:active:hover, #confirm-btn:any-link:hover, #voteSend:hover, #voteSend:visited:hover, #voteSend:active:hover, #voteSend:any-link:hover {
+  background-color: #8b763a;
+  color: #17181A;
+}
+
+#choices #votes {
+  width: 400px;
+  margin: 0 auto;
+}
+
+#choices #votes p, #choices #votes a {
+  text-align: center;
+}
+
+#choices #votes label {
+  font-family: 'ForsvarsmaktenSans';
+  font-size: 1.2em;
+  padding: 0 1em;
+  margin-bottom: 1em;
+  position: relative;
+  bottom: .4em;
+}
+
+#choices div {
+  width: 400px;
+  margin: 0 auto;
+}
+
+#choices div p {
+  text-align: center;
+}
+
+#choices div .field {
+  padding: .5em 1em;
+  font-size: 1em;
+}
+
+#choices div .add-nominee {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+}
+
+#choices div .add-nominee button {
+  padding: 0 1em;
+  font-family: 'ForsvarsmaktenSans Stencil';
+  background-color: #a78d46;
+  color: #e5eeff;
+  border: none;
+}
+
+#vote-btn {
+  margin: 1em auto 0;
+}
+
+table {
+  font-family: 'ForsvarsmaktenSans';
+  width: 500px;
+  margin: 2em auto;
+  border-collapse: collapse;
+}
+
+table tr {
+  width: 100%;
+  margin: 0 auto;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-align: left;
+}
+
+table tr th, table tr td {
+  padding: 1em;
+}
+
+table tr th {
+  font-size: 1.5em;
+}
+
+table tr td {
+  font-size: 1.1em;
+}
+
+@font-face {
+  font-family: 'ForsvarsmaktenSans';
+  src: url("../fonts/ForsvarsmaktenSans-Regular.otf");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ForsvarsmaktenSans Stencil';
+  src: url("../fonts/ForsvarsmaktenSans-Stencil.otf");
+}
+
+@font-face {
+  font-family: 'ForsvarsmaktenSans Condensed';
+  src: url("../fonts/ForsvarsmaktenSans-Condensed.otf");
+}
+
+@media (min-aspect-ratio: 16 / 9) {
+  .fullscreen-bg__video {
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media (max-aspect-ratio: 16 / 9) {
+  .fullscreen-bg__video {
+    width: auto;
+    height: 100%;
+  }
+}
+
+/* Switch Container */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  margin: 0 auto 0;
+}
+
+/* Hide the checkbox input (only needed for `:checked` property) */
+.switch-input {
+  display: none;
+}
+
+/* Switch */
+.switch-label {
+  display: block;
+  width: 48px;
+  height: 24px;
+  text-indent: -150%;
+  clip: rect(0 0 0 0);
+  color: transparent;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  /* Switch Rail & Knob */
+  /* Switch Rail */
+  /* Switch Knob */
+}
+
+.switch-label:before, .switch-label:after {
+  content: "";
+  display: block;
+  position: absolute;
+  cursor: pointer;
+}
+
+.switch-label:before {
+  width: 100%;
+  height: 100%;
+  background-color: #dedede;
+  border-radius: 9999em;
+  -webkit-transition: background-color 0.25s ease;
+  transition: background-color 0.25s ease;
+}
+
+.switch-label:after {
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #fff;
+  -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.45);
+          box-shadow: 0 0 2px rgba(0, 0, 0, 0.45);
+  -webkit-transition: left 0.25s ease;
+  transition: left 0.25s ease;
+}
+
+/* When input is checked */
+.switch-input:checked + .switch-label {
+  /* Switch Rail */
+  /* Switch Knob */
+}
+
+.switch-input:checked + .switch-label:before {
+  background-color: #026aa6;
+}
+
+.switch-input:checked + .switch-label:after {
+  left: 24px;
+}
+
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+}
+
+input[type="checkbox"]:focus {
+  outline: 0;
+}
+
+.toggle {
+  height: 32px;
+  width: 52px;
+  border-radius: 16px;
+  display: inline-block;
+  position: relative;
+  margin: 0 auto;
+  border: 2px solid #474755;
+  background: -webkit-gradient(linear, left top, left bottom, from(#2D2F39), to(#1F2027));
+  background: linear-gradient(180deg, #2D2F39 0%, #1F2027 100%);
+  -webkit-transition: all .2s ease;
+  transition: all .2s ease;
+}
+
+.toggle:after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: white;
+  -webkit-box-shadow: 0 1px 2px rgba(44, 44, 44, 0.2);
+          box-shadow: 0 1px 2px rgba(44, 44, 44, 0.2);
+  -webkit-transition: all 0.2s cubic-bezier(0.5, 0.1, 0.75, 1.35);
+  transition: all 0.2s cubic-bezier(0.5, 0.1, 0.75, 1.35);
+}
+
+.toggle:checked {
+  border-color: #a78d46;
+}
+
+.toggle:checked:after {
+  -webkit-transform: translatex(20px);
+          transform: translatex(20px);
+}
+
+.toggle-center {
+  margin: 0 calc((400px - 56px) / 2);
+}
+/*# sourceMappingURL=style.css.map */

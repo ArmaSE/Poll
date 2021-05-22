@@ -1,0 +1,437 @@
+$color-bg: #17181A;
+$color-text: #e5eeff;
+$screen-background:#121010;
+$btn-color: #a78d46;
+$btn-color-hover: #8b763a;
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: $color-bg;
+  color: $color-text;
+
+  min-height: 100vh;
+}
+
+.fullscreen-bg {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: -100;
+
+  &::before{
+    content:" ";
+    display:block;
+    position:absolute;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    background:linear-gradient(transparentize($screen-background,1) 50%, transparentize(darken($screen-background,10),0.75) 50%), linear-gradient(90deg,transparentize(#ff0000,0.94),transparentize(#00ff00,0.98),transparentize(#0000ff,0.94));
+    z-index:2;
+    background-size:100% 2px, 3px 100%;
+    pointer-events:none;
+  }
+
+}
+
+.fullscreen-bg__video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  filter: brightness(40%);
+}
+
+h1 { font-family: 'ForsvarsmaktenSans Stencil';}
+p { 
+  font-family: 'ForsvarsmaktenSans';
+
+  &.center { 
+    margin: .5em auto 1em;
+    font-family: 'ForsvarsmaktenSans Stencil';
+  }
+}
+
+#content {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  height: 100%;
+  min-height: 100vh;
+
+  .about {
+    flex: 0 1 auto;
+  }
+}
+
+.msg {
+
+  h1 {
+    font-size: 2em;
+  }
+}
+
+nav.header {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  flex: 0 1 auto;
+
+  h1 {
+    font-size: 2.5em;
+    margin-top: .3em;
+    margin-bottom: .3em;
+  }
+}
+
+nav.footer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  flex: 0 1 40px;
+
+  p {
+    margin-top: .5em;
+    margin-bottom: .5em;
+  }
+}
+
+section {
+  min-width: 315px;
+  width: 100%;
+  max-width: 1000px;
+  margin: 2em auto;
+  background-color: rgba(0, 0, 0, 0.3);
+  
+  transition: all 0.5s ease-in-out;
+  
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  
+
+  h1 { margin: 1em auto 1.5em; }
+
+  p {
+    &.text {
+      padding: 0 2.5em;
+      margin: 0 auto 3em;
+  
+      min-width: calc(320px - 5em);
+      max-width: 900px;
+    }
+
+    &.question {
+      padding: 0 1em;
+      margin: 0 auto 1em;
+  
+      min-width: calc(320px - 5em);
+      max-width: 900px;
+    }
+  }
+
+  &#userinfo {
+    width: 100%;
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+
+    .user-container {
+      display: flex;
+      flex-flow: row;
+      flex-wrap: nowrap;
+      justify-content: left;
+    }
+
+    #logout {
+      margin-top: 1em;
+      display: flex;
+      align-content: center;
+    }
+
+    .userimg {
+      margin: 1em 1em .6em 0;
+      width: 128px;
+      height: 128px;
+    }
+
+    .usercreds h1 {
+      margin: 1em auto .6em;
+    }
+
+  }
+}
+
+a, a:visited, a:active, a:any-link {
+  color: $color-text;
+}
+
+#confirm-btn, #confirm-btn:visited, #confirm-btn:active, #confirm-btn:any-link, #voteSend, #voteSend:visited, #voteSend:active, #voteSend:any-link {
+  text-decoration: none;
+  font-family: 'ForsvarsmaktenSans Stencil';
+  font-size: 2em;
+
+  border-style: hidden;
+
+  padding: .8em 1.4em;
+  margin: 0.5em auto 1em;
+  background-color: $btn-color;
+  transition: all 0.5s ease-in-out;
+
+  &:hover {
+    background-color: $btn-color-hover;
+    color: $color-bg;
+  }
+}
+
+#choices {
+  #votes {
+    width: 400px;
+    margin: 0 auto;
+
+    p, a {
+      text-align: center;
+    }
+    
+    label {
+      font-family: 'ForsvarsmaktenSans';
+      font-size: 1.2em;
+      padding: 0 1em;
+      margin-bottom: 1em;
+      position: relative;
+      bottom: .4em;
+    }
+  }
+
+  div {
+    width: 400px;
+    margin: 0 auto;
+
+    p {
+      text-align: center;
+    }
+
+    .field {
+      padding: .5em 1em;
+      font-size: 1em;
+    }
+    
+    .add-nominee {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-around;
+      // width: 100%
+
+      button {
+        padding: 0 1em;
+        font-family: 'ForsvarsmaktenSans Stencil';
+        background-color: $btn-color;
+        color: $color-text;
+        border: none;
+      }
+    }
+  
+  }
+}
+
+#vote-btn {
+  margin: 1em auto 0;
+}
+
+table {
+  font-family: 'ForsvarsmaktenSans';
+  width: 500px;
+  margin: 2em auto;
+  border-collapse: collapse;
+
+  tr {
+    width: 100%;
+    margin: 0 auto;
+    justify-content: center;
+    text-align: left;
+
+    th, td {
+      padding: 1em;
+    }
+
+    th{
+      font-size: 1.5em;
+    }
+
+    td {
+      font-size: 1.1em;
+    }
+
+  }
+}
+
+@font-face {
+  font-family: 'ForsvarsmaktenSans';
+  src: url('../fonts/ForsvarsmaktenSans-Regular.otf');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ForsvarsmaktenSans Stencil';
+  src: url('../fonts/ForsvarsmaktenSans-Stencil.otf');
+}
+
+@font-face {
+  font-family: 'ForsvarsmaktenSans Condensed';
+  src: url('../fonts/ForsvarsmaktenSans-Condensed.otf');
+}
+
+@media (min-aspect-ratio: 16/9) {
+  .fullscreen-bg__video {
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media (max-aspect-ratio: 16/9) {
+  .fullscreen-bg__video {
+    width: auto;
+    height: 100%;
+  }
+}
+
+$switch-transition-duration: 0.25s;
+$switch-transition-timing-function: ease;
+
+$switch-label-width: 48px;
+$switch-label-height: 24px;
+
+$switch-rail-width: 100%;
+$switch-rail-height: 100%;
+$switch-rail-background-color: #dedede;
+$switch-rail-border-radius: 9999em;
+$switch-rail-checked-background-color: #026aa6;
+
+$switch-knob-width: 24px;
+$switch-knob-height: 24px;
+$switch-knob-border-radius: 50%;
+$switch-knob-background-color: #fff;
+$switch-knob-box-shadow: 0 0 2px rgba(0, 0, 0, 0.45);
+$switch-knob-checked-left: $switch-knob-width;
+
+/* Switch Container */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  margin: 0 auto 0;
+}
+
+/* Hide the checkbox input (only needed for `:checked` property) */
+.switch-input {
+  display: none;
+}
+
+/* Switch */
+.switch-label {
+  display: block;
+  width: $switch-label-width;
+  height: $switch-label-height;
+  text-indent: -150%;
+  clip: rect(0 0 0 0);
+  color: transparent;
+  user-select: none;
+  
+  /* Switch Rail & Knob */
+  &:before,
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    cursor: pointer;
+  }
+  
+  /* Switch Rail */
+  &:before {
+    width: $switch-rail-width;
+    height: $switch-rail-height;
+    background-color: $switch-rail-background-color;
+    border-radius: $switch-rail-border-radius;
+    transition: background-color $switch-transition-duration $switch-transition-timing-function;
+  }
+  
+  /* Switch Knob */
+  &:after {
+    top: 0;
+    left: 0;
+    width: $switch-knob-width;
+    height: $switch-knob-height;
+    border-radius: $switch-knob-border-radius;
+    background-color: $switch-knob-background-color;
+    box-shadow: $switch-knob-box-shadow;
+    transition: left $switch-transition-duration $switch-transition-timing-function;
+  }
+}
+
+/* When input is checked */
+.switch-input:checked + .switch-label {
+  /* Switch Rail */
+  &:before {
+    background-color: $switch-rail-checked-background-color;
+  }
+  
+  /* Switch Knob */
+  &:after {
+    left: $switch-knob-checked-left;
+  }
+}
+
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+  &:focus { outline: 0 }
+}
+.toggle {
+  height: 32px;
+  width: 52px;
+  border-radius: 16px;
+  display: inline-block;
+  position: relative;
+  margin: 0 auto;
+  border: 2px solid #474755;
+  background: linear-gradient(180deg, #2D2F39 0%, #1F2027 100%);
+  transition: all .2s ease;
+  &:after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 1px 2px rgba(44,44,44,.2);
+    transition: all .2s cubic-bezier(.5,.1,.75,1.35);
+  }
+  &:checked {
+    border-color: $btn-color;
+    &:after {
+      transform: translatex(20px);
+    }
+  }
+}
+
+.toggle-center {
+  margin: 0 calc((400px - 56px) / 2);
+}
