@@ -36,7 +36,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ASE | Fel</title>
+  <title>ASE | Resultat</title>
 </head>
 <body>
   <div class="fullscreen-bg">
@@ -66,7 +66,7 @@
               echo "<script>console.log('" . json_encode($row) . "')</script>";
               echo "<tr>";
               if (empty($nominee->nickname)) {
-                echo "<td>{$nominee->user}</td>";
+                echo "<td>{$nominee->username} ({$nominee->user})</td>";
               } else {
                 echo "<td>{$nominee->nickname} ({$nominee->user})</td>";
               }
@@ -75,11 +75,6 @@
             }
           ?>
       </table>
-      <?php 
-        if (isset($_GET['editCode'])) {
-          echo "<h1>{$_GET['editCode']}</h1>";
-        }
-      ?>
     </section>
     <section class="prompt">
       <div id="vote-btn">
