@@ -3,9 +3,32 @@
   ini_set('display_startup_errors', 1);
   ini_set('max_execution_time', 120);
   error_reporting(E_ALL);
-  require './login.php';
   require_once './assets/config.php';
   $psql = pg_connect("$db->host $db->port $db->name $db->credentials");
+
+  function apiRequest($url, $post=FALSE, $headers=array()) {
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+  
+    $response = curl_exec($ch);
+  
+  
+    if($post)
+      curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post));
+  
+    $headers[] = 'Accept: application/json';
+  
+    // if(session('access_token'))
+    //   $headers[] = 'Authorization: Bearer ' . session('access_token');
+  
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+  
+    $response = curl_exec($ch);
+    return json_decode($response);
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
