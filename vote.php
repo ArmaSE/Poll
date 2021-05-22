@@ -143,7 +143,7 @@ if ('2021-06-25' < date('Y-m-d')) {
       alert('Du kan ej rösta på medlemmar som redan är en del av ledningen!');
       idField.value = "";
       return;
-    } else if (idField.value == <?=$_SESSION['api_user']->id?>) {
+    } else if (idField.value == "<?=$_SESSION['api_user']->id?>") {
       alert('Du kan ej rösta på dig själv!');
       idField.value = "";
       return;
