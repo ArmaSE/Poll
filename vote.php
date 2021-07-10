@@ -113,6 +113,8 @@ if ('2021-06-25' < date('Y-m-d')) {
 </body>
 </html>
 <script>
+  var nomineeLimit = 0;
+
   function showBtn() {
     var cb = document.getElementById('confirm');
     var btn = document.getElementById('voteSend');
@@ -149,6 +151,12 @@ if ('2021-06-25' < date('Y-m-d')) {
       return;
     }
 
+    if (nomineeLimit >= 3) {
+      alert('du får ej lägga till mer än tre nya kandidater.');
+      idField.value = "";
+      return;
+    }
+
     fetch('http://verifier.obliv1on.space/v1/user/find/id/' + idField.value + '/185178535059521537')
       .then(response => response.json())
       .then(userObj => {
@@ -180,6 +188,7 @@ if ('2021-06-25' < date('Y-m-d')) {
             nl.appendChild(lbl);
             nl.appendChild(document.createElement('br'));
             nl.appendChild(document.createElement('br'));
+            nomineeLimit++;
             idField.value = "";
           } else {
             idField.value = "";
