@@ -1,33 +1,33 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-ini_set('max_execution_time', 120);
-error_reporting(E_ALL);
-require './login.php';
-require_once './assets/config.php';
+  ini_set('display_errors', 1);
+  ini_set('display_startup_errors', 1);
+  ini_set('max_execution_time', 120);
+  error_reporting(E_ALL);
+  require './login.php';
+  require_once './assets/config.php';
 
-if ($_SESSION['api_user']->hasMember === false) {
-  header('Location: error.php?eCode=no_role');
-  die();
-}
+  if ($_SESSION['api_user']->hasMember === false) {
+    header('Location: error.php?eCode=no_role');
+    die();
+  }
 
-echo "<script>console.log('User Info retrieved from Verifier API:')</script>";
-echo "<script>console.log('" . json_encode($_SESSION['api_user']) . "')</script>";
-echo "<script>console.log('User info retrieved from Discord OAuth2 grant:')</script>";
-echo "<script>console.log('" . json_encode($_SESSION['oauth_user']) . "')</script>";
-$psql = pg_connect("$db->host $db->port $db->name $db->credentials");
-$already_voted = voteStatus($psql, $_SESSION['api_user']->id);
+  echo "<script>console.log('User Info retrieved from Verifier API:')</script>";
+  echo "<script>console.log('" . json_encode($_SESSION['api_user']) . "')</script>";
+  echo "<script>console.log('User info retrieved from Discord OAuth2 grant:')</script>";
+  echo "<script>console.log('" . json_encode($_SESSION['oauth_user']) . "')</script>";
+  $psql = pg_connect("$db->host $db->port $db->name $db->credentials");
+  $already_voted = voteStatus($psql, $_SESSION['api_user']->id);
 
-if (empty($already_voted)) {
-  echo "<script>console.log('User has not voted yet!');</script>";
-} else {
-  header('Location: error.php?eCode=already_voted');
-  die();
-}
+  if (empty($already_voted)) {
+    echo "<script>console.log('User has not voted yet!');</script>";
+  } else {
+    header('Location: error.php?eCode=already_voted');
+    die();
+  }
 
-if ('2021-06-25' < date('Y-m-d')) {
-  header('Location: error.php?eCode=concluded');
-}
+  if ('2021-07-31' < date('Y-m-d')) {
+    header('Location: error.php?eCode=concluded');
+  }
 
 ?>
 <!DOCTYPE html>
@@ -82,7 +82,7 @@ if ('2021-06-25' < date('Y-m-d')) {
               } else {
                 $txt = "röst";
               }
-              echo "<input type='checkbox' id='{$row[1]}' name='{$row[1]}' value='{$row[1]}' class='toggle'>";
+              echo "<input type='checkbox' id='{$row[1]}' name='{$row[1]}' value='{$row[1]}' class='toggle' onclick='checkVoteLimit(\"$row[1]\")'>";
               if (empty($nominee->nickname)) {
                 echo "<label for='{$row[1]}' >{$nominee->username} ({$nominee->user})</label><br><br>";
               } else {
@@ -113,7 +113,14 @@ if ('2021-06-25' < date('Y-m-d')) {
 </body>
 </html>
 <script>
-  var nomineeLimit = 0;
+  var nomineesChecked = 0;
+  var nomineeLimit = 3;
+  var currentL = [
+    '231144147291996161',
+    '213279544927322112',
+    '157628163365666816',
+    '0'
+  ];
 
   function showBtn() {
     var cb = document.getElementById('confirm');
@@ -141,7 +148,7 @@ if ('2021-06-25' < date('Y-m-d')) {
       alert('Medlemmen finns redan i listan!');
       idField.value = "";
       return;
-    } else if (idField.value == '231144147291996161' || idField.value == '213279544927322112' || idField.value == '157628163365666816') {
+    } else if (idField.value == currentL[0] || idField.value == currentL[1] || idField.value == currentL[2] || idField.value == currentL[3]) {
       alert('Du kan ej rösta på medlemmar som redan är en del av ledningen!');
       idField.value = "";
       return;
@@ -151,8 +158,8 @@ if ('2021-06-25' < date('Y-m-d')) {
       return;
     }
 
-    if (nomineeLimit >= 3) {
-      alert('du får ej lägga till mer än tre nya kandidater.');
+    if (nomineesChecked >= nomineeLimit) {
+      alert('du får ej lägga till eller rösta på mer än tre nya kandidater.');
       idField.value = "";
       return;
     }
@@ -178,17 +185,19 @@ if ('2021-06-25' < date('Y-m-d')) {
             inp.name = userObj.id;
             inp.value = userObj.id;
             inp.className  = 'toggle';
-            inp.checked = true;
-
+            
             let lbl = document.createElement('label');
             lbl.for = userObj.id;
             lbl.innerHTML = `${name} (${userObj.user})`;
-
+            inp.checked = true;
+            // inp.addEventListener('click', checkVoteLimit(userObj.id));
+            
             nl.appendChild(inp);
             nl.appendChild(lbl);
             nl.appendChild(document.createElement('br'));
             nl.appendChild(document.createElement('br'));
-            nomineeLimit++;
+            nomineesChecked++;
+            document.getElementById(idField.value).setAttribute('onclick', `checkVoteLimit("${idField.value}")`);
             idField.value = "";
           } else {
             idField.value = "";
@@ -198,6 +207,31 @@ if ('2021-06-25' < date('Y-m-d')) {
         console.log(error);
         alert(`Användare med ID "${idField.value}" kunde ej hittas`);
       })
+
+      
+  }
+
+  function checkVoteLimit(id) {
+    console.log(`checking status of checkbox (${id})`);
+    console.log(`Current checked: ${nomineesChecked}, limit: ${nomineeLimit}`)
+    let cbox = document.getElementById(id);
+    if (cbox.checked) {
+      console.log('is checked');
+      if (nomineesChecked >= nomineeLimit) {
+        alert("Maximalt antal röster (" + nomineeLimit + ") har redan uppnåtts.");
+        console.log('MaxNomineesChecked');
+        cbox.checked = false;
+      } else {
+        console.log('up counter');
+        nomineesChecked++;
+        console.log(`now checked: ${nomineesChecked}`)
+      }
+    } else {
+      console.log('is unchecked');
+      console.log(`down counter`);
+      nomineesChecked--;
+      console.log(`now checked: ${nomineesChecked}`)
+    }
   }
 </script>
 <link rel="stylesheet" href="./assets/css/style.css">
