@@ -25,7 +25,7 @@
     die();
   }
 
-  if ('2021-07-31' < date('Y-m-d')) {
+  if ($duedate < date('Y-m-d')) {
     header('Location: error.php?eCode=concluded');
   }
 

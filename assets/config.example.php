@@ -7,4 +7,6 @@
   $db->port = "port = 5432";
   $db->name = "dbname = poller";
   $db->credentials = "user = poller password=password";
+
+  $duedate = '2021-07-31';
 ?>

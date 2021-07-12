@@ -42,6 +42,9 @@
               case 'concluded':
                 echo 'Sista valdatum har nu passerat. Nya svar kan ej skickas in.';
                 break;
+              case 'notConcluded':
+                echo 'Sista valdatum har ej passerat. Resultaten kan ej ses än.';
+                break;
               default:
                 echo 'Ett okänt fel har uppstått. Kontakta obliv1on#1337 på Discord för mer informaiton';
                 break;

@@ -6,6 +6,11 @@
   require_once './assets/config.php';
   $psql = pg_connect("$db->host $db->port $db->name $db->credentials");
 
+  if ($duedate > date('Y-m-d')) {
+    header('Location: error.php?eCode=notConcluded');
+    echo "<script>console.log('".$duedate."')</script>";
+  }
+
   function apiRequest($url, $post=FALSE, $headers=array()) {
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
@@ -56,6 +61,7 @@
             <th>Antal röster</th>
           </tr>
           <?php
+
             $ret = pg_query($psql, "SELECT COUNT(*) AS votecount, nominee FROM votes GROUP BY nominee ORDER BY votecount DESC;");
             if (!$ret) {
               header('Location: error.php?eCode=db_err&eStack='.pg_last_error($psql));
