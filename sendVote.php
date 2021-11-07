@@ -4,11 +4,10 @@
   ini_set('display_startup_errors', 1);
   ini_set('max_execution_time', 120);
   error_reporting(E_ALL);
-  session_start();
+  require './login.php';
   require_once './assets/config.php';
   $psql = pg_connect("$db->host $db->port $db->name $db->credentials");
-  $already_voted = voteStatus($psql, $_SESSION['api_user']->id);
-
+  
   if (empty($_SESSION['access_token'])) {
     header('Location: error.php?eCode=auth_err&eDesc=Not Authenticated');
     die();
@@ -16,7 +15,8 @@
     header('Location: error.php?eCode=no_role');
     die();
   }
-
+  
+  $already_voted = voteStatus($psql, $_SESSION['api_user']->id);
   if (empty($already_voted)) {
     echo "<script>console.log('User has not voted yet!');</script>";
   } else {
@@ -32,6 +32,7 @@
   $votedList = [];
   foreach ($_POST as $nomineeId) {
     if (!in_array($nomineeId, $votedList)) {
+      $nomineeId = pg_escape_string($nomineeId);
       $insert = "INSERT INTO votes (nominee, edit_code) VALUES ('{$nomineeId}', '{$edit_code}')";
       $res = pg_query($psql, $insert);
       array_push($votedList, $nomineeId);
