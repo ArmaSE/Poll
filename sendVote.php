@@ -34,7 +34,7 @@
     if (!in_array($nomineeId, $votedList)) {
       $insert = "INSERT INTO votes (nominee, edit_code) VALUES ('{$nomineeId}', '{$edit_code}')";
       $res = pg_query($psql, $insert);
-      array_push($voted, $nomineeId);
+      array_push($votedList, $nomineeId);
     } else {
       echo "<script>console.log('Duplicate vote detected, omitting.')</script>";
     }
