@@ -6,7 +6,10 @@
   require './login.php';
   require_once './assets/config.php';
 
-  if ($_SESSION['api_user']->hasMember === false) {
+  if (empty($_SESSION['access_token'])) {
+    header('Location: error.php?eCode=auth_err&eDesc=Not Authenticated');
+    die();
+  } else if ($_SESSION['api_user']->hasMember === false) {
     header('Location: error.php?eCode=no_role');
     die();
   }
