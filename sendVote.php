@@ -7,6 +7,7 @@
   session_start();
   require_once './assets/config.php';
   $psql = pg_connect("$db->host $db->port $db->name $db->credentials");
+  $already_voted = voteStatus($psql, $_SESSION['api_user']->id);
 
   if (empty($_SESSION['access_token'])) {
     header('Location: error.php?eCode=auth_err&eDesc=Not Authenticated');
@@ -14,6 +15,17 @@
   } else if ($_SESSION['api_user']->hasMember === false) {
     header('Location: error.php?eCode=no_role');
     die();
+  }
+
+  if (empty($already_voted)) {
+    echo "<script>console.log('User has not voted yet!');</script>";
+  } else {
+    header('Location: error.php?eCode=already_voted');
+    die();
+  }
+
+  if ($duedate < date('Y-m-d')) {
+    header('Location: error.php?eCode=concluded');
   }
 
   $edit_code = generateCode(16);
