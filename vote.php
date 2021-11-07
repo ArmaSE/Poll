@@ -6,15 +6,14 @@
   require './login.php';
   require_once './assets/config.php';
 
-  if ($_SESSION['api_user']->hasMember === false) {
+  if (empty($_SESSION['access_token'])) {
+    header('Location: error.php?eCode=auth_err&eDesc=Not Authenticated');
+    die();
+  } else if ($_SESSION['api_user']->hasMember === false) {
     header('Location: error.php?eCode=no_role');
     die();
   }
 
-  echo "<script>console.log('User Info retrieved from Verifier API:')</script>";
-  echo "<script>console.log('" . json_encode($_SESSION['api_user']) . "')</script>";
-  echo "<script>console.log('User info retrieved from Discord OAuth2 grant:')</script>";
-  echo "<script>console.log('" . json_encode($_SESSION['oauth_user']) . "')</script>";
   $psql = pg_connect("$db->host $db->port $db->name $db->credentials");
   $already_voted = voteStatus($psql, $_SESSION['api_user']->id);
 
